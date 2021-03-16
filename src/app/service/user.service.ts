@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from '../model/user';
 
 @Injectable({
@@ -28,26 +28,37 @@ export class UserService {
    * @returns an observable with a user object.
    */
   get(id: number): Observable<User> {
-    return this.http.get<User>(`${this.endpoint}/${id}`);
+    if (id !== 0) {
+      return this.http.get<User>(`${this.endpoint}/${id}`);
+    }
+
+    return of(new User());
   }
 
   /**
    * Delete a user from the database.
    * The method is: this.http.delete
    */
-
+  remove(id: number): Observable<User> {
+    return this.http.delete<User>(`${this.endpoint}/${id}`);
+  }
 
 
   /**
    * Create a user in the database.
    * The method is: this.http.post
    */
-
+  create(user: User): Observable<any> {
+    return this.http.post<Observable<any>>(`${this.endpoint}`, user);
+  }
 
 
   /**
    * Update a user in the database.
    * The method is: this.http.patch
    */
+  update(user: User): Observable<any> {
+    return this.http.patch<any>(`${this.endpoint}/${user.id}`, user);
+  }
 
 }

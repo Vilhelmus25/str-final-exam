@@ -11,12 +11,27 @@ import { UserService } from 'src/app/service/user.service';
 export class UserListComponent implements OnInit {
 
   users$: Observable<User[]> = this.userService.getAll();
+  textPhrase: string = '';
+  key: string = 'name';
+  columnKey: string = '';
 
   constructor(
     private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+  }
+
+  deleteUser(id: number): void {
+    this.userService.remove(id).subscribe(() => {
+      this.userService.getAll();
+      location.reload();
+    }
+    );
+  }
+
+  onColumnSelect(inputKey: string): void {
+    this.columnKey = inputKey;
   }
 
 }
