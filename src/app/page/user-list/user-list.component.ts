@@ -1,4 +1,6 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user';
 import { ModalService } from 'src/app/service/modal.service';
@@ -16,17 +18,22 @@ export class UserListComponent implements OnInit {
   key: string = 'name';
   columnKey: string = '';
 
+
   constructor(
-    private userService: UserService, private modalService: ModalService,
+    private userService: UserService, private modalService: ModalService, private router: Router, private viewPortScroller: ViewportScroller
   ) { }
 
   ngOnInit(): void {
   }
 
   deleteUser(id: number): void {
+    let position;
     this.userService.remove(id).subscribe(() => {
-      this.userService.getAll();
-      location.reload();
+      this.users$ = this.userService.getAll();
+      //location.reload();
+      position = this.viewPortScroller.getScrollPosition();
+      //console.log(position);      // pedig eddig jó, de nem akarja, na mindegy... :(
+      this.viewPortScroller.scrollToPosition(position);
     }
     );
   }
