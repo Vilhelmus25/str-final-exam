@@ -10,6 +10,7 @@ import { UserListComponent } from './page/user-list/user-list.component';
 import { UserEditorComponent } from './page/user-editor/user-editor.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SorterPipe } from './pipes/sorter.pipe';
+import { ConfirmDialogComponent } from './common/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SorterPipe } from './pipes/sorter.pipe';
     UserListComponent,
     UserEditorComponent,
     FilterPipe,
-    SorterPipe
+    SorterPipe,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
